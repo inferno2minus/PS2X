@@ -79,9 +79,7 @@ void PS2X::config_gamepad(uint8_t clk, uint8_t cmd, uint8_t att, uint8_t dat) {
   pinMode(_clk, OUTPUT);
   pinMode(_att, OUTPUT);
   pinMode(_cmd, OUTPUT);
-  pinMode(_dat, INPUT);
-
-  digitalWrite(_dat, HIGH);
+  pinMode(_dat, INPUT_PULLUP);
 
   read_gamepad();
 }
