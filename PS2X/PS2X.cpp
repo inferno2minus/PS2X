@@ -52,7 +52,7 @@ uint8_t PS2X::read_gamepad() {
     _data[1] = 0x42;
 
     for (uint8_t i = 0; i < 21; i++) {
-     _data[i] = gamepad_shift(_data[i]);
+      _data[i] = gamepad_shift(_data[i]);
     }
 
     digitalWrite(_att, HIGH);
@@ -64,10 +64,10 @@ uint8_t PS2X::read_gamepad() {
     reconfig_gamepad();
   }
 
-   _last_buttons = _buttons;
-   _buttons = *(uint16_t*)(_data + 3);
+  _last_buttons = _buttons;
+  _buttons = *(uint16_t*)(_data + 3);
 
-   return ((_data[1] & 0xf0) == 0x70);
+  return ((_data[1] & 0xf0) == 0x70);
 }
 
 void PS2X::config_gamepad(uint8_t clk, uint8_t cmd, uint8_t att, uint8_t dat) {

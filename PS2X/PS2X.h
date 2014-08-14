@@ -60,27 +60,27 @@
 #define PSAB_SQUARE        16
 
 class PS2X {
-  public:
-    uint16_t Buttons();
-    uint8_t NewButtonState();
-    uint8_t NewButtonState(uint16_t);
-    uint8_t ButtonPressed(uint16_t);
-    uint8_t ButtonReleased(uint16_t);
-    uint8_t Button(uint16_t);
-    uint8_t Analog(uint8_t);
-    uint8_t read_gamepad();
-    void config_gamepad(uint8_t, uint8_t, uint8_t, uint8_t);
-  private:
-    uint16_t _last_buttons;
-    uint16_t _buttons;
-    uint8_t _data[21];
-    uint8_t _clk;
-    uint8_t _cmd;
-    uint8_t _att;
-    uint8_t _dat;
-    uint8_t gamepad_shift(uint8_t);
-    void send_command(uint8_t*, uint8_t);
-    void reconfig_gamepad();
+public:
+  uint16_t Buttons();
+  uint8_t NewButtonState();
+  uint8_t NewButtonState(uint16_t);
+  uint8_t ButtonPressed(uint16_t);
+  uint8_t ButtonReleased(uint16_t);
+  uint8_t Button(uint16_t);
+  uint8_t Analog(uint8_t);
+  uint8_t read_gamepad();
+  void config_gamepad(uint8_t, uint8_t, uint8_t, uint8_t);
+private:
+  uint16_t _last_buttons;
+  uint16_t _buttons;
+  uint8_t _data[21];
+  uint8_t _clk;
+  uint8_t _cmd;
+  uint8_t _att;
+  uint8_t _dat;
+  uint8_t gamepad_shift(uint8_t);
+  void send_command(uint8_t*, uint8_t);
+  void reconfig_gamepad();
 };
 
 #endif
