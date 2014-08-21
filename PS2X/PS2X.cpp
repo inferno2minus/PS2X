@@ -43,8 +43,6 @@ uint8_t PS2X::Analog(uint8_t button) {
 }
 
 uint8_t PS2X::read_gamepad() {
-  uint8_t* received_byte;
-
   for (uint8_t i = 0; i <= 10; i++) {
     digitalWrite(_cmd, HIGH);
     digitalWrite(_clk, HIGH);
@@ -52,9 +50,15 @@ uint8_t PS2X::read_gamepad() {
     _data[0] = 0x01;
     _data[1] = 0x42;
 
-    received_byte = send_command(_data, sizeof(_data));
+    digitalWrite(_att, LOW);
 
-    if ((received_byte[1] & 0xf0) != 0x70) {
+    for (uint8_t i = 0; i < 21; i++) {
+      _data[i] = gamepad_shift(_data[i]);
+    }
+
+    digitalWrite(_att, HIGH);
+
+    if ((_data[1] & 0xf0) != 0x70) {
       reconfig_gamepad();
     }
     else {
@@ -63,9 +67,9 @@ uint8_t PS2X::read_gamepad() {
   }
 
   _last_buttons = _buttons;
-  _buttons = *(uint16_t*)(received_byte + 3);
+  _buttons = *(uint16_t*)(_data + 3);
 
-  return ((received_byte[1] & 0xf0) == 0x70);
+  return ((_data[1] & 0xf0) == 0x70);
 }
 
 void PS2X::config_gamepad(uint8_t clk, uint8_t cmd, uint8_t att, uint8_t dat) {
@@ -109,16 +113,14 @@ uint8_t PS2X::gamepad_shift(uint8_t transmit_byte) {
   return received_byte;
 }
 
-uint8_t* PS2X::send_command(uint8_t send_data[], uint8_t size) {
+void PS2X::send_command(uint8_t* send_data, uint8_t size) {
   digitalWrite(_att, LOW);
 
   for (uint8_t i = 0; i < size; i++) {
-    send_data[i] = gamepad_shift(send_data[i]);
+    gamepad_shift(send_data[i]);
   }
 
   digitalWrite(_att, HIGH);
-
-  return send_data;
 }
 
 void PS2X::reconfig_gamepad() {
