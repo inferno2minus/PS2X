@@ -52,8 +52,8 @@ uint8_t PS2X::read_gamepad() {
 
     digitalWrite(_att, LOW);
 
-    for (uint8_t i = 0; i < 21; i++) {
-      _data[i] = gamepad_shift(_data[i]);
+    for (uint8_t j = 0; j < 21; j++) {
+      _data[j] = gamepad_shift(_data[j]);
     }
 
     digitalWrite(_att, HIGH);
