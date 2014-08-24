@@ -98,7 +98,6 @@ uint8_t PS2X::gamepad_shift(uint8_t transmit_byte) {
     }
 
     digitalWrite(_clk, LOW);
-    delayMicroseconds(1);
 
     if (digitalRead(_dat)) {
       received_byte |= _BV(i);
@@ -106,9 +105,6 @@ uint8_t PS2X::gamepad_shift(uint8_t transmit_byte) {
 
     digitalWrite(_clk, HIGH);
   }
-
-  digitalWrite(_cmd, HIGH);
-  delayMicroseconds(10);
 
   return received_byte;
 }
