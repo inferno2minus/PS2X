@@ -78,9 +78,9 @@ private:
   uint8_t _cmd;
   uint8_t _att;
   uint8_t _dat;
-  uint8_t gamepad_shift(uint8_t);
+  uint8_t shift_gamepad(uint8_t);
   void send_command(uint8_t*, uint8_t);
-  void reconfig_gamepad();
+  void init_gamepad();
 };
 
 #endif
