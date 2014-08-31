@@ -12,12 +12,12 @@ PS2X	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
-Buttons	KEYWORD2
-Button	KEYWORD2
-Analog	KEYWORD2
+ButtonDataByte	KEYWORD2
 NewButtonState	KEYWORD2
 ButtonPressed	KEYWORD2
 ButtonReleased	KEYWORD2
+Button	KEYWORD2
+Analog	KEYWORD2
 read_gamepad	KEYWORD2
 config_gamepad	KEYWORD2
 
