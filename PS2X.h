@@ -61,26 +61,26 @@
 
 class PS2X {
 public:
-  uint16_t ButtonDataByte();
-  uint8_t NewButtonState();
-  uint8_t NewButtonState(uint16_t);
-  uint8_t ButtonPressed(uint16_t);
-  uint8_t ButtonReleased(uint16_t);
-  uint8_t Button(uint16_t);
-  uint8_t Analog(uint8_t);
+  void config_gamepad(uint8_t clk_pin, uint8_t cmd_pin, uint8_t att_pin, uint8_t dat_pin);
   uint8_t read_gamepad();
-  void config_gamepad(uint8_t, uint8_t, uint8_t, uint8_t);
+  uint8_t Analog(uint8_t button);
+  uint8_t Button(uint16_t button);
+  uint8_t ButtonPressed(uint16_t button);
+  uint8_t ButtonReleased(uint16_t button);
+  uint8_t NewButtonState();
+  uint8_t NewButtonState(uint16_t button);
+  uint16_t ButtonDataByte();
 private:
+  void init_gamepad();
+  void send_command(uint8_t* send_data, uint8_t size);
+  uint8_t shift_gamepad(uint8_t transmit_byte);
+  uint8_t _clk_pin;
+  uint8_t _cmd_pin;
+  uint8_t _att_pin;
+  uint8_t _dat_pin;
+  uint8_t _data[21];
   uint16_t _last_buttons;
   uint16_t _buttons;
-  uint8_t _data[21];
-  uint8_t _clk;
-  uint8_t _cmd;
-  uint8_t _att;
-  uint8_t _dat;
-  uint8_t shift_gamepad(uint8_t);
-  void send_command(uint8_t*, uint8_t);
-  void init_gamepad();
 };
 
 #endif
