@@ -28,7 +28,7 @@ void PS2X::config_gamepad(uint8_t clk_pin, uint8_t cmd_pin, uint8_t att_pin, uin
   init_gamepad();
 }
 
-uint8_t PS2X::read_gamepad() {
+bool PS2X::read_gamepad() {
   for (uint8_t i = 0; i <= 10; i++) {
     _data[0] = 0x01;
     _data[1] = 0x42;
@@ -59,23 +59,23 @@ uint8_t PS2X::Analog(uint8_t button) {
   return _data[button];
 }
 
-uint8_t PS2X::Button(uint16_t button) {
+bool PS2X::Button(uint16_t button) {
   return ((~_buttons & button) > 0);
 }
 
-uint8_t PS2X::ButtonPressed(uint16_t button) {
+bool PS2X::ButtonPressed(uint16_t button) {
   return(NewButtonState(button) & Button(button));
 }
 
-uint8_t PS2X::ButtonReleased(uint16_t button) {
+bool PS2X::ButtonReleased(uint16_t button) {
   return((NewButtonState(button)) & ((~_last_buttons & button) > 0));
 }
 
-uint8_t PS2X::NewButtonState() {
+bool PS2X::NewButtonState() {
   return ((_last_buttons ^ _buttons) > 0);
 }
 
-uint8_t PS2X::NewButtonState(uint16_t button) {
+bool PS2X::NewButtonState(uint16_t button) {
   return (((_last_buttons ^ _buttons) & button) > 0);
 }
 

@@ -62,13 +62,13 @@
 class PS2X {
 public:
   void config_gamepad(uint8_t clk_pin, uint8_t cmd_pin, uint8_t att_pin, uint8_t dat_pin);
-  uint8_t read_gamepad();
+  bool read_gamepad();
   uint8_t Analog(uint8_t button);
-  uint8_t Button(uint16_t button);
-  uint8_t ButtonPressed(uint16_t button);
-  uint8_t ButtonReleased(uint16_t button);
-  uint8_t NewButtonState();
-  uint8_t NewButtonState(uint16_t button);
+  bool Button(uint16_t button);
+  bool ButtonPressed(uint16_t button);
+  bool ButtonReleased(uint16_t button);
+  bool NewButtonState();
+  bool NewButtonState(uint16_t button);
   uint16_t ButtonDataByte();
 private:
   void init_gamepad();
