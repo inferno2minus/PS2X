@@ -1,7 +1,7 @@
 /**
  * Project PS2 Library
  * Description: PS2 controller library for Arduino
- * Version: v2.0
+ * Version: v2.1
  * Programmer: Bill Porter
  *             Kompanets Konstantin (aka I2M)
  *
@@ -14,16 +14,16 @@ static uint8_t enter_config[] = { 0x01, 0x43, 0x00, 0x01, 0x00 };
 static uint8_t analog_mode[] = { 0x01, 0x44, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00 };
 static uint8_t exit_config[] = { 0x01, 0x43, 0x00, 0x00, 0x5A, 0x5A, 0x5A, 0x5A, 0x5A };
 
-void PS2X::config_gamepad(uint8_t clk_pin, uint8_t cmd_pin, uint8_t att_pin, uint8_t dat_pin) {
-  _clk_pin = clk_pin;
+void PS2X::config_gamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint8_t clk_pin) {
+  _dat_pin = dat_pin;
   _cmd_pin = cmd_pin;
   _att_pin = att_pin;
-  _dat_pin = dat_pin;
+  _clk_pin = clk_pin;
 
-  pinMode(_clk_pin, OUTPUT);
-  pinMode(_att_pin, OUTPUT);
-  pinMode(_cmd_pin, OUTPUT);
   pinMode(_dat_pin, INPUT_PULLUP);
+  pinMode(_cmd_pin, OUTPUT);
+  pinMode(_att_pin, OUTPUT);
+  pinMode(_clk_pin, OUTPUT);
 
   init_gamepad();
 }
