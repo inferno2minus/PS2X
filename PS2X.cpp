@@ -89,7 +89,7 @@ void PS2X::init_gamepad() {
   send_command(exit_config, sizeof(exit_config));
 }
 
-void PS2X::send_command(uint8_t* send_data, uint8_t size) {
+void PS2X::send_command(uint8_t *send_data, uint8_t size) {
   digitalWrite(_att_pin, LOW);
 
   for (uint8_t i = 0; i < size; i++) {

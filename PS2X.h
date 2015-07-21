@@ -52,7 +52,7 @@ public:
   uint16_t ButtonDataByte();
 private:
   void init_gamepad();
-  void send_command(uint8_t* send_data, uint8_t size);
+  void send_command(uint8_t *send_data, uint8_t size);
   uint8_t shift_gamepad(uint8_t transmit_byte);
   uint8_t _clk_pin;
   uint8_t _cmd_pin;
