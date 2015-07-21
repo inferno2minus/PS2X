@@ -13,7 +13,6 @@
 
 #include "Arduino.h"
 
-//These are our button constants
 #define PSB_SELECT         0x0001
 #define PSB_L3             0x0002
 #define PSB_R3             0x0004
@@ -35,29 +34,10 @@
 #define PSB_CROSS          0x4000
 #define PSB_SQUARE         0x8000
 
-//These are stick values
 #define PSS_RX             5
 #define PSS_RY             6
 #define PSS_LX             7
 #define PSS_LY             8
-
-//These are analog buttons
-#define PSAB_PAD_RIGHT     9
-#define PSAB_PAD_UP        11
-#define PSAB_PAD_DOWN      12
-#define PSAB_PAD_LEFT      10
-#define PSAB_L2            19
-#define PSAB_R2            20
-#define PSAB_L1            17
-#define PSAB_R1            18
-#define PSAB_GREEN         13
-#define PSAB_RED           14
-#define PSAB_BLUE          15
-#define PSAB_PINK          16
-#define PSAB_TRIANGLE      13
-#define PSAB_CIRCLE        14
-#define PSAB_CROSS         15
-#define PSAB_SQUARE        16
 
 class PS2X {
 public:
