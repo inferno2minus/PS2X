@@ -35,7 +35,7 @@ bool PS2X::read_gamepad() {
 
     digitalWrite(_att_pin, LOW);
 
-    for (uint8_t j = 0; j < 21; j++) {
+    for (uint8_t j = 0; j < 9; j++) {
       _data[j] = shift_gamepad(_data[j]);
     }
 

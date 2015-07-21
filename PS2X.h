@@ -58,7 +58,7 @@ private:
   uint8_t _cmd_pin;
   uint8_t _att_pin;
   uint8_t _dat_pin;
-  uint8_t _data[21];
+  uint8_t _data[9];
   uint16_t _last_buttons;
   uint16_t _buttons;
 };
