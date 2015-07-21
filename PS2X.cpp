@@ -10,9 +10,9 @@
 
 #include "PS2X.h"
 
-static uint8_t enter_config[] = { 0x01, 0x43, 0x00, 0x01, 0x00 };
-static uint8_t analog_mode[] = { 0x01, 0x44, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00 };
-static uint8_t exit_config[] = { 0x01, 0x43, 0x00, 0x00, 0x5A, 0x5A, 0x5A, 0x5A, 0x5A };
+static uint8_t config_enter[] = { 0x01, 0x43, 0x00, 0x01, 0x00 };
+static uint8_t config_mode[] = { 0x01, 0x44, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00 };
+static uint8_t config_exit[] = { 0x01, 0x43, 0x00, 0x00, 0x5A, 0x5A, 0x5A, 0x5A, 0x5A };
 
 void PS2X::config_gamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint8_t clk_pin) {
   _dat_pin = dat_pin;
@@ -84,9 +84,9 @@ uint16_t PS2X::ButtonDataByte() {
 }
 
 void PS2X::init_gamepad() {
-  send_command(enter_config, sizeof(enter_config));
-  send_command(analog_mode, sizeof(analog_mode));
-  send_command(exit_config, sizeof(exit_config));
+  send_command(config_enter, sizeof(config_enter));
+  send_command(config_mode, sizeof(config_mode));
+  send_command(config_exit, sizeof(config_exit));
 }
 
 void PS2X::send_command(uint8_t *send_data, uint8_t size) {
