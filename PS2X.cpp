@@ -10,10 +10,6 @@
 
 #include "PS2X.h"
 
-static uint8_t config_enter[] = { 0x01, 0x43, 0x00, 0x01, 0x00 };
-static uint8_t config_mode[] = { 0x01, 0x44, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00 };
-static uint8_t config_exit[] = { 0x01, 0x43, 0x00, 0x00, 0x5A, 0x5A, 0x5A, 0x5A, 0x5A };
-
 void PS2X::config_gamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint8_t clk_pin) {
   _dat_pin = dat_pin;
   _cmd_pin = cmd_pin;
@@ -84,7 +80,11 @@ uint16_t PS2X::ButtonDataByte() {
 }
 
 void PS2X::init_gamepad() {
-  send_command(config_enter, sizeof(config_enter));
+  uint8_t config_join[] = { 0x01, 0x43, 0x00, 0x01, 0x00 };
+  uint8_t config_mode[] = { 0x01, 0x44, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00 };
+  uint8_t config_exit[] = { 0x01, 0x43, 0x00, 0x00, 0x5A, 0x5A, 0x5A, 0x5A, 0x5A };
+
+  send_command(config_join, sizeof(config_join));
   send_command(config_mode, sizeof(config_mode));
   send_command(config_exit, sizeof(config_exit));
 }
