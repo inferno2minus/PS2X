@@ -10,6 +10,11 @@
 
 #include "PS2X.h"
 
+uint8_t config_join[] = { 0x01, 0x43, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 };
+uint8_t config_mode[] = { 0x01, 0x44, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00 };
+uint8_t config_exit[] = { 0x01, 0x43, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+uint8_t config_data[] = { 0x01, 0x42, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
 void PS2X::config_gamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint8_t clk_pin) {
   _dat_pin = dat_pin;
   _cmd_pin = cmd_pin;
@@ -30,14 +35,11 @@ void PS2X::config_gamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uin
 
 bool PS2X::read_gamepad() {
   for (uint8_t i = 0; i <= 10; i++) {
-    _data[0] = 0x01;
-    _data[1] = 0x42;
-
     digitalWrite(_att_pin, LOW);
     delayMicroseconds(BYTE_DELAY);
 
     for (uint8_t j = 0; j < 9; j++) {
-      _data[j] = shift_gamepad(_data[j]);
+      _data[j] = shift_gamepad(config_data[j]);
     }
 
     digitalWrite(_att_pin, HIGH);
@@ -85,10 +87,6 @@ uint16_t PS2X::ButtonDataByte() {
 }
 
 void PS2X::init_gamepad() {
-  uint8_t config_join[] = { 0x01, 0x43, 0x00, 0x01, 0x00 };
-  uint8_t config_mode[] = { 0x01, 0x44, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00 };
-  uint8_t config_exit[] = { 0x01, 0x43, 0x00, 0x00, 0x5A, 0x5A, 0x5A, 0x5A, 0x5A };
-
   send_command(config_join, sizeof(config_join));
   send_command(config_mode, sizeof(config_mode));
   send_command(config_exit, sizeof(config_exit));
