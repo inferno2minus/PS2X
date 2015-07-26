@@ -14,6 +14,7 @@
 #include "Arduino.h"
 
 #define BYTE_DELAY         20
+#define ATT_DELAY          16000
 
 #define PSB_SELECT         0x0001
 #define PSB_L3             0x0002
