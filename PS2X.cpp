@@ -1,7 +1,7 @@
 /**
  * Project PS2 Library
  * Description: PS2 controller library for Arduino
- * Version: v2.1
+ * Version: v2.2
  * Programmer: Bill Porter
  *             Kompanets Konstantin (aka I2M)
  *
