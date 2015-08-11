@@ -1,7 +1,7 @@
 /**
  * Project PS2 Library
  * Description: PS2 controller library for Arduino
- * Version: v2.2
+ * Version: v2.3
  * Programmer: Bill Porter
  *             Kompanets Konstantin (aka I2M)
  *
@@ -44,19 +44,19 @@
 
 class PS2X {
 public:
-  void config_gamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint8_t clk_pin);
-  bool read_gamepad();
-  uint8_t Analog(uint8_t button);
+  void ConfigGamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint8_t clk_pin);
+  bool ReadGamepad();
   bool Button(uint16_t button);
   bool ButtonPressed(uint16_t button);
   bool ButtonReleased(uint16_t button);
   bool NewButtonState();
   bool NewButtonState(uint16_t button);
+  uint8_t Analog(uint8_t button);
   uint16_t ButtonDataByte();
 private:
-  void init_gamepad();
-  void send_command(uint8_t *send_data, uint8_t size);
-  uint8_t shift_gamepad(uint8_t transmit_byte);
+  void InitGamepad();
+  void SendCommand(uint8_t *send_data, uint8_t size);
+  uint8_t ShiftGamepad(uint8_t transmit_byte);
   uint8_t _clk_pin;
   uint8_t _cmd_pin;
   uint8_t _att_pin;
