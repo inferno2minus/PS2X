@@ -37,7 +37,7 @@ bool PS2X::ReadGamepad() {
   for (uint8_t i = 0; i <= 10; i++) {
     SendCommand(buffer_send, sizeof(buffer_send));
 
-    if (_data[1] == 0x73) {
+    if (_data[1] == ANALOG_MODE) {
       break;
     }
     else {
@@ -48,7 +48,7 @@ bool PS2X::ReadGamepad() {
   _last_buttons = _buttons;
   _buttons = *(uint16_t*)(_data + 3);
 
-  return (_data[1] == 0x73);
+  return (_data[1] == ANALOG_MODE);
 }
 
 bool PS2X::Button(uint16_t button) {
