@@ -1,11 +1,9 @@
 /**
- * Project PS2 Library
- * Description: PS2 controller library for Arduino
- * Version: v2.3
- * Programmer: Bill Porter
- *             Kompanets Konstantin (aka I2M)
- *
- * Hardware setup: Playstation 2 gamepad
+ * Project:     PS2X Library
+ * Description: Playstation 2 controller library for Arduino
+ * Version:     v2.3
+ * Author:      Bill Porter
+ *              Kompanets Konstantin (aka I2M)
  */
 
 #ifndef PS2X_H
