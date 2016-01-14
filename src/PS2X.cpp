@@ -1,7 +1,7 @@
 /**
  * Project:     PS2X Library
  * Description: Playstation 2 controller library for Arduino
- * Version:     v2.3
+ * Version:     v2.4
  * Author:      Bill Porter
  *              Kompanets Konstantin (aka I2M)
  */
@@ -32,7 +32,7 @@ void PS2X::ConfigGamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint
 }
 
 bool PS2X::ReadGamepad() {
-  for (uint8_t i = 0; i <= 10; i++) {
+  for (uint8_t i = 0; i < 2; i++) {
     SendCommand(buffer_send, sizeof(buffer_send));
 
     if (_data[1] == ANALOG_MODE) {

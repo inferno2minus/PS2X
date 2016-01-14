@@ -1,7 +1,7 @@
 /**
  * Project:     PS2X Library
  * Description: Playstation 2 controller library for Arduino
- * Version:     v2.3
+ * Version:     v2.4
  * Author:      Bill Porter
  *              Kompanets Konstantin (aka I2M)
  */
