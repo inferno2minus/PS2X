@@ -52,7 +52,6 @@ public:
   bool NewButtonState();
   bool NewButtonState(uint16_t button);
   uint8_t Analog(uint8_t button);
-  uint16_t ButtonDataByte();
 private:
   void InitGamepad();
   void SendCommand(uint8_t *send_data, uint8_t size);
