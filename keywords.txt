@@ -17,7 +17,7 @@ ReadGamepad	KEYWORD2
 Button	KEYWORD2
 ButtonPressed	KEYWORD2
 ButtonReleased	KEYWORD2
-NewButtonState	KEYWORD2
+ButtonNewState	KEYWORD2
 Analog	KEYWORD2
 
 #######################################

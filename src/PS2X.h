@@ -49,8 +49,8 @@ public:
   bool Button(uint16_t button);
   bool ButtonPressed(uint16_t button);
   bool ButtonReleased(uint16_t button);
-  bool NewButtonState();
-  bool NewButtonState(uint16_t button);
+  bool ButtonNewState();
+  bool ButtonNewState(uint16_t button);
   uint8_t Analog(uint8_t button);
 private:
   void InitGamepad();

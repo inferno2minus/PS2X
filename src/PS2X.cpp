@@ -54,18 +54,18 @@ bool PS2X::Button(uint16_t button) {
 }
 
 bool PS2X::ButtonPressed(uint16_t button) {
-  return (NewButtonState(button) & Button(button));
+  return ((ButtonNewState(button)) & (Button(button)));
 }
 
 bool PS2X::ButtonReleased(uint16_t button) {
-  return ((NewButtonState(button)) & ((~_last_buttons & button) > 0));
+  return ((ButtonNewState(button)) & ((~_last_buttons & button) > 0));
 }
 
-bool PS2X::NewButtonState() {
+bool PS2X::ButtonNewState() {
   return ((_last_buttons ^ _buttons) > 0);
 }
 
-bool PS2X::NewButtonState(uint16_t button) {
+bool PS2X::ButtonNewState(uint16_t button) {
   return (((_last_buttons ^ _buttons) & button) > 0);
 }
 
