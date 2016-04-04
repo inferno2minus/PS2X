@@ -44,7 +44,7 @@ bool PS2X::ReadGamepad() {
   }
 
   _last_buttons = _buttons;
-  _buttons = *(uint16_t*)(_data + 3);
+  _buttons = *(uint16_t *)(_data + 3);
 
   return (_data[1] == ANALOG_MODE);
 }
