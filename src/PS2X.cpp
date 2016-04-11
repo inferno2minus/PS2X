@@ -80,7 +80,7 @@ void PS2X::InitGamepad() {
   SendCommand(config_exit, sizeof(config_exit));
 }
 
-void PS2X::SendCommand(uint8_t *send_data, uint8_t size) {
+void PS2X::SendCommand(const uint8_t *send_data, uint8_t size) {
   digitalWrite(_att_pin, LOW);
   delayMicroseconds(BYTE_DELAY);
 

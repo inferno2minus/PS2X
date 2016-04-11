@@ -54,7 +54,7 @@ public:
   uint8_t Analog(uint8_t button);
 private:
   void InitGamepad();
-  void SendCommand(uint8_t *send_data, uint8_t size);
+  void SendCommand(const uint8_t *send_data, uint8_t size);
   uint8_t ShiftGamepad(uint8_t transmit_byte);
   uint8_t _clk_pin;
   uint8_t _cmd_pin;
