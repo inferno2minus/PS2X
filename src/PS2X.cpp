@@ -1,7 +1,7 @@
 /**
  * Project:     PS2X Library
  * Description: Playstation 2 controller library for Arduino
- * Version:     v2.5
+ * Version:     v2.6
  * Author:      Bill Porter
  *              Kompanets Konstantin (aka I2M)
  */
@@ -11,13 +11,18 @@
 uint8_t buffer_send[] = { 0x01, 0x42, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 uint8_t config_mode[] = { 0x01, 0x43, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 };
 uint8_t analog_mode[] = { 0x01, 0x44, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00 };
+uint8_t rumble_mode[] = { 0x01, 0x4D, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00 };
+uint8_t native_mode[] = { 0x01, 0x4F, 0x00, 0xFF, 0xFF, 0x03, 0x00, 0x00, 0x00 };
 uint8_t config_exit[] = { 0x01, 0x43, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
-void PS2X::ConfigGamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint8_t clk_pin) {
+void PS2X::ConfigGamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint8_t clk_pin, bool rumble, bool native) {
   _dat_pin = dat_pin;
   _cmd_pin = cmd_pin;
   _att_pin = att_pin;
   _clk_pin = clk_pin;
+
+  _rumble = rumble;
+  _native = native;
 
   pinMode(_dat_pin, INPUT_PULLUP);
   pinMode(_cmd_pin, OUTPUT);
@@ -31,11 +36,16 @@ void PS2X::ConfigGamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint
   InitGamepad();
 }
 
-bool PS2X::ReadGamepad() {
+bool PS2X::ReadGamepad(bool small_motor, uint8_t large_motor) {
   for (uint8_t i = 0; i < 2; i++) {
+    if (_rumble) {
+      buffer_send[4] = small_motor;
+      buffer_send[5] = large_motor;
+    }
+
     SendCommand(buffer_send, sizeof(buffer_send));
 
-    if (_data[1] == ANALOG_MODE) {
+    if ((_data[1] & 0xF0) == 0x70) {
       break;
     }
     else {
@@ -46,7 +56,7 @@ bool PS2X::ReadGamepad() {
   _last_buttons = _buttons;
   _buttons = *(uint16_t *)(_data + 3);
 
-  return (_data[1] == ANALOG_MODE);
+  return ((_data[1] & 0xF0) == 0x70);
 }
 
 bool PS2X::Button(uint16_t button) {
@@ -77,6 +87,14 @@ void PS2X::InitGamepad() {
   SendCommand(buffer_send, sizeof(buffer_send));
   SendCommand(config_mode, sizeof(config_mode));
   SendCommand(analog_mode, sizeof(analog_mode));
+
+  if (_rumble) {
+    SendCommand(rumble_mode, sizeof(rumble_mode));
+  }
+  if (_native) {
+    SendCommand(native_mode, sizeof(native_mode));
+  }
+
   SendCommand(config_exit, sizeof(config_exit));
 }
 
@@ -87,6 +105,13 @@ void PS2X::SendCommand(const uint8_t *send_data, uint8_t size) {
   for (uint8_t i = 0; i < size; i++) {
     _data[i] = ShiftGamepad(send_data[i]);
     delayMicroseconds(BYTE_DELAY);
+  }
+
+  if (_native) {
+    for (uint8_t i = 9; i < 21; i++) {
+      _data[i] = ShiftGamepad(0);
+      delayMicroseconds(BYTE_DELAY);
+    }
   }
 
   digitalWrite(_att_pin, HIGH);
