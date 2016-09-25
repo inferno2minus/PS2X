@@ -8,12 +8,11 @@
 
 #include "PS2X.h"
 
-uint8_t buffer_send[] = { 0x01, 0x42, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-uint8_t config_mode[] = { 0x01, 0x43, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 };
+uint8_t config_mode[] = { 0x01, 0x43, 0x00, 0x01, 0x00 };
 uint8_t analog_mode[] = { 0x01, 0x44, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00 };
-uint8_t rumble_mode[] = { 0x01, 0x4D, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00 };
+uint8_t rumble_mode[] = { 0x01, 0x4D, 0x00, 0x00, 0x01, 0xFF, 0xFF, 0xFF, 0xFF };
 uint8_t native_mode[] = { 0x01, 0x4F, 0x00, 0xFF, 0xFF, 0x03, 0x00, 0x00, 0x00 };
-uint8_t config_exit[] = { 0x01, 0x43, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+uint8_t config_exit[] = { 0x01, 0x43, 0x00, 0x00, 0x5A, 0x5A, 0x5A, 0x5A, 0x5A };
 
 void PS2X::ConfigGamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint8_t clk_pin, bool rumble, bool native) {
   _dat_pin = dat_pin;
@@ -37,13 +36,15 @@ void PS2X::ConfigGamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint
 }
 
 bool PS2X::ReadGamepad(bool small_motor, uint8_t large_motor) {
-  for (uint8_t i = 0; i < 2; i++) {
-    if (_rumble) {
-      buffer_send[3] = small_motor;
-      buffer_send[4] = large_motor;
-    }
+  uint8_t buffer_send[21] = { 0x01, 0x42, 0x00, small_motor, large_motor};
 
-    SendCommand(buffer_send, sizeof(buffer_send));
+  for (uint8_t i = 0; i < 2; i++) {
+    if (_native) {
+      SendCommand(buffer_send, sizeof(buffer_send));
+    }
+    else {
+      SendCommand(buffer_send, 9);
+    }
 
     if ((_data[1] & 0xF0) == 0x70) {
       break;
@@ -84,7 +85,6 @@ uint8_t PS2X::Analog(uint8_t button) {
 }
 
 void PS2X::InitGamepad() {
-  SendCommand(buffer_send, sizeof(buffer_send));
   SendCommand(config_mode, sizeof(config_mode));
   SendCommand(analog_mode, sizeof(analog_mode));
 
@@ -105,13 +105,6 @@ void PS2X::SendCommand(const uint8_t *send_data, uint8_t size) {
   for (uint8_t i = 0; i < size; i++) {
     _data[i] = ShiftGamepad(send_data[i]);
     delayMicroseconds(BYTE_DELAY);
-  }
-
-  if (_native) {
-    for (uint8_t i = 9; i < 21; i++) {
-      _data[i] = ShiftGamepad(0);
-      delayMicroseconds(BYTE_DELAY);
-    }
   }
 
   digitalWrite(_att_pin, HIGH);
