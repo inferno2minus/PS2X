@@ -39,8 +39,8 @@ void PS2X::ConfigGamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint
 bool PS2X::ReadGamepad(bool small_motor, uint8_t large_motor) {
   for (uint8_t i = 0; i < 2; i++) {
     if (_rumble) {
-      buffer_send[4] = small_motor;
-      buffer_send[5] = large_motor;
+      buffer_send[3] = small_motor;
+      buffer_send[4] = large_motor;
     }
 
     SendCommand(buffer_send, sizeof(buffer_send));
