@@ -8,7 +8,7 @@
 
 #include "PS2X.h"
 
-uint8_t query_hello[] = { 0x01, 0x42, 0x00, 0x00, 0x00 };
+uint8_t first_query[] = { 0x01, 0x42, 0x00, 0x00, 0x00 };
 uint8_t config_mode[] = { 0x01, 0x43, 0x00, 0x01, 0x00 };
 uint8_t analog_mode[] = { 0x01, 0x44, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00 };
 uint8_t rumble_mode[] = { 0x01, 0x4D, 0x00, 0x00, 0x01, 0xFF, 0xFF, 0xFF, 0xFF };
@@ -37,14 +37,14 @@ void PS2X::ConfigGamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint
 }
 
 bool PS2X::ReadGamepad(bool small_motor, uint8_t large_motor) {
-  uint8_t query_data[21] = { 0x01, 0x42, 0x00, small_motor, large_motor };
+  uint8_t request_data[21] = { 0x01, 0x42, 0x00, small_motor, large_motor };
 
   for (uint8_t i = 0; i < 2; i++) {
     if (_native) {
-      SendCommand(query_data, sizeof(query_data));
+      SendCommand(request_data, sizeof(request_data));
     }
     else {
-      SendCommand(query_data, 9);
+      SendCommand(request_data, 9);
     }
 
     if ((_data[1] & 0xF0) == 0x70) {
@@ -86,7 +86,7 @@ uint8_t PS2X::Analog(uint8_t button) {
 }
 
 void PS2X::InitGamepad() {
-  SendCommand(query_hello, sizeof(query_hello));
+  SendCommand(first_query, sizeof(first_query));
   SendCommand(config_mode, sizeof(config_mode));
   SendCommand(analog_mode, sizeof(analog_mode));
 
