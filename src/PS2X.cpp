@@ -115,7 +115,10 @@ void PS2X::SendCommand(const uint8_t *command, uint8_t size) {
 uint8_t PS2X::ShiftGamepad(uint8_t transmit_byte) {
   uint8_t received_byte = 0;
 
+  //Software SPI (CPOL=1, CPHA=1)
   for (uint8_t i = 0; i < 8; i++) {
+    digitalWrite(_clk_pin, LOW);
+
     if (transmit_byte & _BV(i)) {
       digitalWrite(_cmd_pin, HIGH);
     }
@@ -123,13 +126,11 @@ uint8_t PS2X::ShiftGamepad(uint8_t transmit_byte) {
       digitalWrite(_cmd_pin, LOW);
     }
 
-    digitalWrite(_clk_pin, LOW);
+    digitalWrite(_clk_pin, HIGH);
 
     if (digitalRead(_dat_pin)) {
       received_byte |= _BV(i);
     }
-
-    digitalWrite(_clk_pin, HIGH);
   }
 
   return received_byte;
