@@ -29,7 +29,6 @@ void PS2X::ConfigGamepad(uint8_t dat_pin, uint8_t cmd_pin, uint8_t att_pin, uint
   pinMode(_att_pin, OUTPUT);
   pinMode(_clk_pin, OUTPUT);
 
-  digitalWrite(_cmd_pin, HIGH);
   digitalWrite(_att_pin, HIGH);
   digitalWrite(_clk_pin, HIGH);
 
@@ -132,7 +131,6 @@ uint8_t PS2X::ShiftGamepad(uint8_t transmit_byte) {
 
     digitalWrite(_clk_pin, HIGH);
   }
-  digitalWrite(_cmd_pin, HIGH);
 
   return received_byte;
 }
