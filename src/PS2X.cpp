@@ -109,7 +109,7 @@ void PS2X::SendCommand(const uint8_t *command, uint8_t size) {
   }
 
   digitalWrite(_att_pin, HIGH);
-  delayMicroseconds(ATT_DELAY);
+  delayMicroseconds(READ_DELAY);
 }
 
 uint8_t PS2X::ShiftGamepad(uint8_t transmit_byte) {
@@ -126,11 +126,15 @@ uint8_t PS2X::ShiftGamepad(uint8_t transmit_byte) {
       digitalWrite(_cmd_pin, LOW);
     }
 
+    delayMicroseconds(CLK_DELAY);
+
     digitalWrite(_clk_pin, HIGH);
 
     if (digitalRead(_dat_pin)) {
       received_byte |= _BV(i);
     }
+
+    delayMicroseconds(CLK_DELAY);
   }
 
   return received_byte;
